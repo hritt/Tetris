@@ -1,1 +1,1 @@
-edit by hritt.
+this is a c++ program about tetris.
