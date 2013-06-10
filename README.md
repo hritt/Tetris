@@ -1,5 +1,7 @@
-this is a c++ program about tetris.
+this is a MFC program about tetris.
 
 =====================
 
 to study c++
+
+use OpenGL
