@@ -31,6 +31,7 @@ BEGIN_MESSAGE_MAP(COpenGLView, CView)
 	ON_COMMAND(ID_GRID_NUM, OnGridNum)
 	ON_COMMAND(ID_STOP, OnStop)
 	ON_COMMAND(ID_AGAIN, OnAgain)
+	ON_WM_KEYDOWN()
 	//}}AFX_MSG_MAP
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
@@ -88,7 +89,7 @@ void COpenGLView::OnDraw(CDC* pDC)
 
 	DisplayGrid();//ÏÔÊ¾Íø¸ñ
 
-	glFlush();// Ç¿ÖÆOpenGLÍê³É×÷Í¼ÃüÁî
+//	glFlush();// Ç¿ÖÆOpenGLÍê³É×÷Í¼ÃüÁî
 	SwapBuffers(m_hDC);// Ë«»º³åÇøµÄ½»»»
 
 	DisplayScore();//ÏÔÊ¾³É¼¨
@@ -193,7 +194,7 @@ void COpenGLView::OnSize(UINT nType, int cx, int cy) //±£Ö¤OpenGLµÄ´°¿ÚÓëÊÓÍ¼´óÐ
 	CView::OnSize(nType, cx, cy);
 	
 	// TODO: Add your message handler code here
-	glViewport(0,0,cx,cy);
+	glViewport(0,0,cx-150,cy);
 	
 }
 
@@ -236,6 +237,27 @@ void COpenGLView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CView::OnChar(nChar, nRepCnt, nFlags);
 }
 
+void COpenGLView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) //ÊµÏÖÓÃ·½Ïò¼üÀ´¿ØÖÆ
+{
+	// TODO: Add your message handler code here and/or call default
+	switch(nChar){
+	case VK_LEFT:
+		OnChar('a',nRepCnt,nFlags);
+		break;
+	case VK_RIGHT:
+		OnChar('d',nRepCnt,nFlags);
+		break;
+	case VK_UP:
+		OnChar('w',nRepCnt,nFlags);
+		break;
+	case VK_DOWN:
+		OnChar('s',nRepCnt,nFlags);
+		break;
+	}
+	
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
 void COpenGLView::OnTimer(UINT nIDEvent) 
 {
 	// TODO: Add your message handler code here and/or call default
@@ -253,6 +275,7 @@ void COpenGLView::OnTimer(UINT nIDEvent)
 		square.m_square[x+square.block[i][j].p4.x][y+square.block[i][j].p4.y]=true;
 		
 		//³ÉÒ»ÌõÏßÊ±Ïû³ý //ÐÞ¸Ä·ÖÊý
+		int r=0;//´Ë´ÎÏû³ýµÄÐÐÊý
 		for(int k=y;k<y+4;k++){
 			bool tmp=true;
 			for(int m=0;m<square.width;m++){
@@ -263,10 +286,16 @@ void COpenGLView::OnTimer(UINT nIDEvent)
 			}
 			if(tmp==true){
 				square.DeleteRow(k);
-				square.m_grade++;
-				k--;
+				r++; k--; y--;
 			}
 		}
+		switch(r){
+			case 1:square.m_grade+=1;  break;
+			case 2:square.m_grade+=3;  break;
+			case 3:square.m_grade+=6;  break;
+			case 4:square.m_grade+=10; break;
+		}
+				
 		if(square.Fail()){
 			KillTimer(1);
 //			AfxMessageBox("Ê¤°ÜÄË±ø¼Ò³£ÊÂ£¬\nÓ¢ÐÛÇëÖØÐÂÀ´¹ý!");
@@ -296,8 +325,10 @@ void COpenGLView::OnTimer(UINT nIDEvent)
 void COpenGLView::DisplayScore()
 {
 	CString s;
+	s.Format("made by hritt");
+	TextOut(m_hDC,310,40,s,s.GetLength());
 	s.Format("µÃ·Ö:%d",square.m_grade);
-	TextOut(m_hDC,120,5,s,s.GetLength());
+	TextOut(m_hDC,330,80,s,s.GetLength());
 }
 
 void COpenGLView::DisplayGrid()
@@ -369,3 +400,5 @@ void COpenGLView::OnAgain()
 	
 	SetTimer(1, 600, NULL);
 }
+
+

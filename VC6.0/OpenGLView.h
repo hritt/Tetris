@@ -75,6 +75,7 @@ protected:
 	afx_msg void OnGridNum();
 	afx_msg void OnStop();
 	afx_msg void OnAgain();
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

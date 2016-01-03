@@ -89,7 +89,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	//  the CREATESTRUCT cs
 	cs.style &=~FWS_ADDTOTITLE;  
     cs.lpszName = "¶íÂÞË¹·½¿é";  
-	cs.cx=300;
+	cs.cx=450;//300+150
 	cs.cy=510;
 
 	return TRUE;
