@@ -304,7 +304,7 @@ void COpenGLView::OnTimer(UINT nIDEvent)
 		}
 		if(square.Success()){
 			KillTimer(1);
-			MessageBox("Success,you hava eliminated 50 rows!","恭喜",MB_OK);
+			MessageBox("成功消除50行！","恭喜",MB_OK);
 			return ;
 		}
 
