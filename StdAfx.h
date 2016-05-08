@@ -19,7 +19,7 @@
 
 #include<gl/gl.h>
 #include<gl/glu.h>
-//#include<gl/glaux.h>
+//#include<gl/glaux.h> //vc6.0中带有glaux.h，但之后版本不再含有
 
 #ifndef _AFX_NO_AFXCMN_SUPPORT
 #include <afxcmn.h>			// MFC support for Windows Common Controls
